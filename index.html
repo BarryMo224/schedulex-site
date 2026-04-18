@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TokAuto — Personal TikTok Scheduler</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --text: #0e0e0e;
+    --muted: #888;
+    --accent: #fe2c55;
+    --accent2: #0a0a0a;
+    --card: #ffffff;
+    --border: #e2e0da;
+    --mono: 'DM Mono', monospace;
+    --display: 'Syne', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.5;
+  }
+
+  /* ── HEADER ── */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 60px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: -0.04em;
+  }
+  .logo span { color: var(--accent); }
+
+  nav { display: flex; gap: 32px; }
+  nav a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.78rem;
+    transition: color 0.2s;
+    letter-spacing: 0.02em;
+  }
+  nav a:hover { color: var(--text); }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 100px 60px 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 14px;
+    margin-bottom: 24px;
+  }
+  .hero-label::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-size: 3.8rem;
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.05em;
+    margin-bottom: 24px;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.8;
+    margin-bottom: 36px;
+    max-width: 400px;
+  }
+
+  .hero-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.78rem;
+    transition: all 0.2s;
+    font-family: var(--mono);
+  }
+  .btn-dark {
+    background: var(--text);
+    color: white;
+  }
+  .btn-dark:hover { background: #333; }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .btn-outline:hover { border-color: var(--text); color: var(--text); }
+
+  /* ── HERO VISUAL ── */
+  .hero-visual {
+    position: relative;
+  }
+  .mockup-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.08);
+    transform: rotate(1.5deg);
+  }
+  .mockup-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .mockup-title {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .mockup-dot {
+    width: 8px; height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+  }
+  .mockup-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.72rem;
+  }
+  .mockup-row:last-child { border-bottom: none; }
+  .mockup-thumb {
+    width: 36px; height: 46px;
+    background: linear-gradient(160deg, #f0ede8, #e0ddd8);
+    border-radius: 7px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+  }
+  .mockup-info { flex: 1; }
+  .mockup-name { font-weight: 500; margin-bottom: 2px; }
+  .mockup-time { color: var(--muted); font-size: 0.65rem; }
+  .pill {
+    font-size: 0.6rem;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+  .pill-q { background: #fef3c7; color: #d97706; }
+  .pill-ok { background: #dcfce7; color: #16a34a; }
+  .pill-proc { background: #e0f2fe; color: #0369a1; }
+
+  /* ── FEATURES ── */
+  .features {
+    background: white;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 80px 60px;
+  }
+  .features-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+  .feature-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .feature h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+  }
+  .feature p { color: var(--muted); font-size: 0.78rem; line-height: 1.8; }
+
+  /* ── LEGAL SECTION ── */
+  .legal-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .legal-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.25s;
+    display: block;
+  }
+  .legal-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.07);
+    border-color: var(--text);
+  }
+  .legal-icon { font-size: 2rem; margin-bottom: 20px; display: block; }
+  .legal-card h2 {
+    font-family: var(--display);
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 10px;
+  }
+  .legal-card p { color: var(--muted); font-size: 0.78rem; line-height: 1.8; margin-bottom: 24px; }
+  .legal-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--text); }
+
+  @media (max-width: 768px) {
+    header, footer { padding: 20px 24px; }
+    .hero { grid-template-columns: 1fr; padding: 60px 24px 40px; gap: 40px; }
+    h1 { font-size: 2.6rem; }
+    .hero-visual { display: none; }
+    .features { padding: 60px 24px; }
+    .features-inner { grid-template-columns: 1fr; gap: 32px; }
+    .legal-section { grid-template-columns: 1fr; padding: 60px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Tok<span>Auto</span></div>
+  <nav>
+    <a href="#features">Features</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-label">Personal TikTok Scheduler</div>
+    <h1>Schedule.<br>Publish.<br><em>Automate.</em></h1>
+    <p class="hero-sub">
+      TokAuto is a personal productivity tool that lets you schedule
+      and automatically publish videos to your own TikTok account
+      via the official TikTok API.
+    </p>
+    <div class="hero-links">
+      <a href="terms.html" class="btn btn-dark">📄 Terms of Service</a>
+      <a href="privacy.html" class="btn btn-outline">🔒 Privacy Policy</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="mockup-card">
+      <div class="mockup-top">
+        <span class="mockup-title">🗂️ Queue</span>
+        <span class="mockup-dot"></span>
+      </div>
+      <div class="mockup-row">
+        <div class="mockup-thumb">🎵</div>
+        <div class="mockup-info">
+          <div class="mockup-name">clip_transition.mp4</div>
+          <div class="mockup-time">📅 Today · 18:00</div>
+        </div>
+        <span class="pill pill-proc">Processing</span>
+      </div>
+      <div class="mockup-row">
+        <div class="mockup-thumb">🎬</div>
+        <div class="mockup-info">
+          <div class="mockup-name">vlog_12.mp4</div>
+          <div class="mockup-time">📅 Tomorrow · 09:00</div>
+        </div>
+        <span class="pill pill-q">Queued</span>
+      </div>
+      <div class="mockup-row">
+        <div class="mockup-thumb">✅</div>
+        <div class="mockup-info">
+          <div class="mockup-name">intro_channel.mp4</div>
+          <div class="mockup-time">📅 Yesterday · 14:00</div>
+        </div>
+        <span class="pill pill-ok">Published</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="features-inner">
+    <div class="feature">
+      <div class="feature-label">01 — Auth</div>
+      <h3>TikTok OAuth 2.0</h3>
+      <p>Secure login via TikTok's official OAuth flow. Only the minimum required scopes are requested: <code>user.info.basic</code>, <code>video.publish</code>, <code>video.list</code>.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-label">02 — Publish</div>
+      <h3>Auto Scheduler</h3>
+      <p>Upload your video, pick a date and time, and TokAuto handles the rest. The scheduler polls TikTok's API every minute and publishes at the exact planned time.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-label">03 — Privacy</div>
+      <h3>Personal Use Only</h3>
+      <p>TokAuto is a single-user tool. No data is collected, sold, or shared. Your TikTok credentials are stored only in your own session and never transmitted to third parties.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LEGAL CARDS -->
+<section class="legal-section">
+  <a href="terms.html" class="legal-card">
+    <span class="legal-icon">📄</span>
+    <h2>Terms of Service</h2>
+    <p>The rules governing the use of TokAuto. This tool is for personal use only and must be used in accordance with TikTok's Developer Terms of Service.</p>
+    <span class="legal-arrow">Read Terms →</span>
+  </a>
+  <a href="privacy.html" class="legal-card">
+    <span class="legal-icon">🔒</span>
+    <h2>Privacy Policy</h2>
+    <p>TokAuto does not collect, store, or share any personal data. This policy explains exactly what data is accessed and how it is used within the application.</p>
+    <span class="legal-arrow">Read Policy →</span>
+  </a>
+</section>
+
+<footer>
+  <span>© 2026 TokAuto — Personal TikTok Scheduler</span>
+  <div style="display:flex;gap:24px;">
+    <a href="terms.html">Terms</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</footer>
+
+</body>
+</html>

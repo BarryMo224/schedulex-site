@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — TokAuto</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f0; --text: #0e0e0e; --muted: #777;
+    --accent: #fe2c55; --border: #e2e0da; --card: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; font-size: 14px; line-height: 1.7; }
+
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 28px 60px; border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: var(--bg); z-index: 10;
+    backdrop-filter: blur(8px);
+  }
+  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; letter-spacing: -0.04em; text-decoration: none; color: var(--text); }
+  .logo span { color: var(--accent); }
+  .back { font-size: 0.75rem; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+  .back:hover { color: var(--text); }
+
+  .page-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 80px 40px 120px;
+  }
+
+  .doc-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--muted); background: white; border: 1px solid var(--border);
+    border-radius: 20px; padding: 5px 14px; margin-bottom: 28px;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 3rem; letter-spacing: -0.05em; line-height: 1.05;
+    margin-bottom: 16px;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+
+  .doc-meta {
+    color: var(--muted); font-size: 0.72rem; margin-bottom: 56px;
+    padding-bottom: 32px; border-bottom: 1px solid var(--border);
+  }
+
+  .doc-body h2 {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 1.05rem; letter-spacing: -0.02em;
+    margin: 48px 0 14px; padding-top: 48px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .doc-body h2:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+  .h2-num {
+    font-size: 0.62rem; color: var(--accent);
+    background: rgba(254,44,85,0.08); border-radius: 4px;
+    padding: 2px 7px; letter-spacing: 0.05em;
+  }
+
+  .doc-body p { color: #333; font-size: 0.82rem; line-height: 1.9; margin-bottom: 14px; }
+  .doc-body ul { margin: 12px 0 14px 0; padding-left: 0; list-style: none; }
+  .doc-body ul li {
+    font-size: 0.82rem; color: #333; line-height: 1.9;
+    padding-left: 20px; position: relative; margin-bottom: 6px;
+  }
+  .doc-body ul li::before {
+    content: '—'; position: absolute; left: 0; color: var(--accent);
+  }
+
+  .highlight-box {
+    background: white; border: 1px solid var(--border); border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 20px 0;
+    font-size: 0.78rem; color: #444; line-height: 1.8;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 0.72rem; color: var(--muted);
+  }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--text); }
+
+  @media (max-width: 768px) {
+    header, footer { padding: 20px 24px; }
+    .page-wrap { padding: 48px 24px 80px; }
+    h1 { font-size: 2.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">Tok<span>Auto</span></a>
+  <a href="index.html" class="back">← Back to home</a>
+</header>
+
+<div class="page-wrap">
+  <div class="doc-label">📄 Legal document</div>
+  <h1>Terms of<br><em>Service</em></h1>
+  <div class="doc-meta">
+    Last updated: April 18, 2026 &nbsp;·&nbsp; Effective immediately
+  </div>
+
+  <div class="doc-body">
+
+    <h2><span class="h2-num">01</span> Acceptance of Terms</h2>
+    <p>By accessing or using TokAuto ("the Application"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Application.</p>
+    <p>TokAuto is a personal productivity tool developed for individual, non-commercial use. It is not a public service, SaaS platform, or commercial product.</p>
+
+    <h2><span class="h2-num">02</span> Description of the Service</h2>
+    <p>TokAuto allows its sole user to:</p>
+    <ul>
+      <li>Authenticate with their personal TikTok account via TikTok's official OAuth 2.0 protocol</li>
+      <li>Upload video files to be scheduled for future publication</li>
+      <li>Automatically publish scheduled videos to their own TikTok profile via TikTok's Content Posting API</li>
+      <li>Monitor the publication status of their scheduled content</li>
+    </ul>
+    <div class="highlight-box">
+      TokAuto is designed and operated exclusively as a single-user, personal tool. It does not serve third-party users, collect user data, or operate as a multi-tenant platform.
+    </div>
+
+    <h2><span class="h2-num">03</span> TikTok Platform Compliance</h2>
+    <p>TokAuto operates in strict compliance with TikTok's Developer Terms of Service and Platform Policies. By using this Application, you agree to also comply with:</p>
+    <ul>
+      <li>TikTok's Terms of Service (tiktok.com/legal/terms-of-service)</li>
+      <li>TikTok's Community Guidelines</li>
+      <li>TikTok's Developer Terms and API usage policies</li>
+    </ul>
+    <p>The Application will not be used to publish content that violates TikTok's policies, including but not limited to: spam, misleading content, copyrighted material without proper authorization, or content that promotes harm.</p>
+
+    <h2><span class="h2-num">04</span> Permitted Use</h2>
+    <p>TokAuto is permitted to be used exclusively for:</p>
+    <ul>
+      <li>Scheduling and publishing original video content to the user's own TikTok account</li>
+      <li>Viewing the status of previously published content</li>
+      <li>Managing a personal content publication queue</li>
+    </ul>
+
+    <h2><span class="h2-num">05</span> Prohibited Use</h2>
+    <p>The Application must not be used to:</p>
+    <ul>
+      <li>Publish content on behalf of third parties without their explicit consent</li>
+      <li>Automate spam, mass publication, or inauthentic engagement</li>
+      <li>Circumvent TikTok's rate limits or platform safeguards</li>
+      <li>Distribute, sell, or sublicense access to the Application</li>
+      <li>Publish content that violates any applicable law or TikTok's policies</li>
+    </ul>
+
+    <h2><span class="h2-num">06</span> Intellectual Property</h2>
+    <p>All video content published through TokAuto remains the sole intellectual property of its creator. TokAuto does not claim any rights over the content processed or published through the Application.</p>
+    <p>The TokAuto application code and interface are the property of its developer. TikTok's trademarks, logos, and API are property of TikTok Inc. and are used in accordance with their developer guidelines.</p>
+
+    <h2><span class="h2-num">07</span> Disclaimer of Warranties</h2>
+    <p>TokAuto is provided "as is" without warranty of any kind. The developer does not guarantee that the Application will be error-free, uninterrupted, or that publications will always succeed, as this depends on TikTok's API availability and content moderation decisions.</p>
+
+    <h2><span class="h2-num">08</span> Limitation of Liability</h2>
+    <p>The developer of TokAuto shall not be liable for any indirect, incidental, or consequential damages arising from the use or inability to use the Application, including but not limited to: failed publications, account restrictions imposed by TikTok, or content removal by TikTok's moderation systems.</p>
+
+    <h2><span class="h2-num">09</span> Changes to Terms</h2>
+    <p>These Terms of Service may be updated from time to time. The "Last updated" date at the top of this document reflects the most recent revision. Continued use of the Application constitutes acceptance of the updated terms.</p>
+
+    <h2><span class="h2-num">10</span> Contact</h2>
+    <p>For any questions regarding these Terms of Service, please reach out via the developer's registered contact associated with the TikTok Developer Portal application.</p>
+
+  </div>
+</div>
+
+<footer>
+  <span>© 2026 TokAuto</span>
+  <div style="display:flex;gap:24px;">
+    <a href="index.html">Home</a>
+    <a href="privacy.html">Privacy Policy</a>
+  </div>
+</footer>
+
+</body>
+</html>
